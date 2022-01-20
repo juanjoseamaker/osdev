@@ -33,10 +33,10 @@ OS.elf: $(COBJFILES) $(ASMOBJFILES)
 	ld -m elf_i386 -T linker.ld $(COBJFILES) $(ASMOBJFILES) -o $(BUILD_PATH)/OS.elf -nostdlib
 
 run_grub: OS.iso
-	qemu-system-i386 -cdrom OS.iso -enable-kvm -serial stdio
+	qemu-system-i386 -cdrom OS.iso -enable-kvm -serial stdio -soundhw pcspk
 
 run: OS.elf
-	qemu-system-i386 -kernel $(BUILD_PATH)/OS.elf -enable-kvm -serial stdio
+	qemu-system-i386 -kernel $(BUILD_PATH)/OS.elf -enable-kvm -serial stdio -soundhw pcspk
 
 clean:
 	rm -r $(COBJFILES) $(ASMOBJFILES) $(BUILD_PATH)/OS.elf OS.iso isodir

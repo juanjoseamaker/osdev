@@ -12,6 +12,7 @@
 #include "device/pit.h"
 #include "device/framebuffer.h"
 #include "device/mouse.h"
+#include "device/speaker.h"
 
 #define CHECK_FLAG(flags,bit) ((flags) & (1 << (bit)))
 
@@ -120,13 +121,15 @@ void main(uint32_t magic, uint32_t addr) {
 		uint32_t color = framebuffer_color(&fb, 0, 0, 0);
 		if(mouse_buttons() & LEFT_BUTTON)
 			color = framebuffer_color(&fb, 1, 1, 1);
-			
-		if(mouse_buttons() & RIGHT_BUTTON)
+
+		if(mouse_buttons() & RIGHT_BUTTON) {
+			song();
 			for(uint32_t x = 0; x < fb.width; x++) {
 				for(uint32_t y = 0; y < fb.width; y++) {
 					framebuffer_set_pixel(&fb, x, y, framebuffer_color(&fb, 0, 0, 0));
 				}
 			}
+		}
 			
 		for(uint32_t x = 0; x < fb.width; x++) {
 			for(uint32_t y = 0; y < fb.width; y++) {
